@@ -64,9 +64,9 @@ export const seoByPath: Record<string, SeoMeta> = {
     path: '/terminos',
   },
   '/gracias': {
-    title: 'Cita confirmada | Oliver G.',
+    title: 'Ya casi | Oliver G.',
     description:
-      'Tu cita quedó agendada. Revisa tu correo con el enlace de la reunión y prepara los tres puntos de tu negocio que más te urge conversar con Oliver.',
+      'Tu mensaje quedó listo en WhatsApp. Dale enviar y coordinamos la hora en el mismo chat, con los puntos de tu negocio que más te urge conversar.',
     path: '/gracias',
     noindex: true,
   },

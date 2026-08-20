@@ -1,9 +1,8 @@
-import { CalendarCheck, MessageCircle } from 'lucide-react'
-import { ButtonLink, ButtonRoute } from '@/components/ui/Button'
-import { whatsappLink } from '@/lib/whatsapp'
+import { CalendarCheck } from 'lucide-react'
+import { ButtonRoute } from '@/components/ui/Button'
+import { WhatsAppButton } from './WhatsAppButton'
 import { track } from '@/lib/analytics'
-import { CTA_LABEL, CTA_WHATSAPP_LABEL, ROUTES } from '@/config/site'
-import { useLocation } from 'react-router-dom'
+import { CTA_LABEL, ROUTES } from '@/config/site'
 import { cn } from '@/lib/cn'
 
 /**
@@ -23,8 +22,6 @@ export function CtaBlock({
   className?: string
   align?: 'left' | 'center'
 }) {
-  const { pathname } = useLocation()
-
   return (
     <div
       className={cn(
@@ -37,17 +34,7 @@ export function CtaBlock({
         <CalendarCheck aria-hidden="true" strokeWidth={1.75} className="size-4" />
         {CTA_LABEL}
       </ButtonRoute>
-      <ButtonLink
-        href={whatsappLink(message)}
-        target="_blank"
-        rel="noopener noreferrer"
-        variant="secondary"
-        size={size}
-        onClick={() => track('whatsapp_click', { location, page: pathname })}
-      >
-        <MessageCircle aria-hidden="true" strokeWidth={1.75} className="size-4" />
-        {CTA_WHATSAPP_LABEL}
-      </ButtonLink>
+      <WhatsAppButton message={message} location={location} size={size} />
     </div>
   )
 }
