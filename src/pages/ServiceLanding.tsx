@@ -35,7 +35,7 @@ export default function ServiceLanding() {
 
   if (!service) return <Navigate to={ROUTES.home} replace />
 
-  const message = `${landing.whatsappMessagePrefix} ${service.name}.`
+  const message = `${landing.whatsappMessagePrefix} ${service.name}. ${landing.whatsappMessageSuffix}`
   const proof = testimonials[0]
 
   return (

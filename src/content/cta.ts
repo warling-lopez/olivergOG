@@ -36,7 +36,10 @@ export const contactForm = {
   submit: 'Enviar por WhatsApp',
   /* Decirlo sube la tasa de envío: nadie se sorprende con el cambio de app. */
   note: 'Se abrirá WhatsApp con tu mensaje ya escrito. Solo tienes que darle enviar.',
-  sent: 'Se abrió WhatsApp con tu mensaje listo para enviar.',
+  errors: {
+    required: 'Completa este campo para continuar.',
+    tooShort: 'Cuéntame un poco más para poder ayudarte.',
+  },
   fields: {
     nombre: { label: 'Nombre', placeholder: 'Tu nombre' },
     negocio: { label: 'Negocio u oficio', placeholder: 'Restaurante, constructora, consultorio…' },

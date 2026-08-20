@@ -1,44 +1,56 @@
 # Checklist de lanzamiento
 
-Marca cada punto contra el sitio ya subido a `https://myprofolio.grolow.com/olivergOG/`.
+Contra el sitio ya publicado en `https://myprofolio.grolow.com/olivergOG/`.
 
 ## Antes de subir
 
 - [ ] `grep -rn TODO_CLIENTE src public scripts` → cero resultados.
-- [ ] `.env.local` creado con `VITE_GA4_ID` y `VITE_WHATSAPP` reales.
+- [ ] `.env.local` con `VITE_GA4_ID` y `VITE_WHATSAPP` reales.
 - [ ] `npm run og` y `npm run icons` reejecutados si cambió el arte.
-- [ ] `npm run build` sin errores; `npm run preview` revisado.
+- [ ] `npm run build` sin errores.
+- [ ] Checklist del README 04 aprobado.
 
 ## Técnico
 
 - [ ] Todas las rutas cargan con recarga directa (F5) y con enlace directo.
-- [ ] Ningún 404 en assets (pestaña Network filtrando por estado).
+- [ ] Ningún 404 en assets (Network filtrando por estado).
 - [ ] HTTPS activo y sin contenido mixto.
-- [ ] `.htaccess` presente en el servidor — muchos clientes FTP ocultan los archivos con punto.
+- [ ] El servidor sirve el HTML prerenderizado **antes** del fallback de SPA.
+      Ojo: `npm run preview` no lo hace — hace fallback primero. Para validar el
+      prerender en local, sirve `dist` con cualquier servidor estático normal.
 
 ## SEO
 
-- [ ] `title` y `description` únicos en las 7 rutas indexables.
+- [ ] `title` y `description` únicos y dentro del límite en las 7 rutas.
 - [ ] Canonical correcto en cada ruta, con el segmento `/olivergOG`.
-- [ ] `curl https://…/olivergOG/servicios/mentoria-empresarial | grep '<title>'` devuelve el título de la landing (confirma el prerender en producción).
+- [ ] `curl https://…/olivergOG/servicios/mentoria-empresarial | grep '<title>'`
+      devuelve el título de la landing.
 - [ ] JSON-LD sin errores en Rich Results Test y en validator.schema.org.
-- [ ] `sitemap.xml` accesible y enviado a Search Console.
-- [ ] El `robots.txt` de la **raíz del dominio** no bloquea `/olivergOG/` — coordinar con quien administre `myprofolio.grolow.com`.
+- [ ] `sitemap.xml` accesible y enviado a Search Console (prefijo de URL).
+- [ ] El `robots.txt` de la **raíz del host** no bloquea `/olivergOG/`. Lo genera
+      el proyecto de Grolow Portfolios; este sitio no lo publica.
+- [ ] Un solo `<h1>` por página; jerarquía de encabezados correcta.
+- [ ] Todas las imágenes con `alt` en español (las decorativas, `alt=""` + `aria-hidden`).
 
 ## Social
 
-- [ ] Vista previa correcta en WhatsApp (compártelo contigo mismo primero: WhatsApp cachea con fuerza), LinkedIn Post Inspector y el debugger de Facebook.
+- [ ] Vista previa correcta en WhatsApp, LinkedIn Post Inspector y el debugger de Facebook.
 - [ ] La imagen OG se lee en miniatura.
+- [ ] Compártelo contigo mismo en WhatsApp **primero**: cachea con fuerza y
+      corregirlo después no refresca la miniatura enseguida.
 
 ## Conversión
 
-- [ ] "Agenda tu cita" funciona desde navbar, hero, cada tarjeta de servicio, sticky móvil y cierre.
-- [ ] WhatsApp abre con el mensaje pre-escrito correcto en móvil y en escritorio.
-- [ ] El formulario de `/agenda` abre WhatsApp con el mensaje armado y redirige a `/gracias`.
-- [ ] «Prefiero escribir directo» abre WhatsApp sin pasar por el formulario.
-- [ ] Las tildes, la `ñ` y los signos `¿ ¡` llegan bien al chat, en móvil y en WhatsApp Web.
-- [ ] Todos los eventos aparecen en el DebugView de GA4.
-- [ ] `whatsapp_send` marcado como conversión en GA4.
+- [ ] "Agenda tu cita" funciona desde navbar, hero, cada tarjeta de servicio,
+      sticky móvil y cierre.
+- [ ] El formulario de `/agenda` arma el mensaje correcto y abre WhatsApp, en
+      móvil y en escritorio.
+- [ ] "Prefiero escribir directo" abre WhatsApp sin pasar por el formulario.
+- [ ] Los mensajes por contexto son los correctos: home, landing de cada servicio
+      y cierre llevan su propio texto pre-escrito.
+- [ ] Tildes, `ñ` y signos `¿ ¡` llegan bien al chat, en móvil y en WhatsApp Web.
+- [ ] Los 9 eventos aparecen en el DebugView de GA4.
+- [ ] **`whatsapp_send` marcado como conversión en GA4.**
 
 ## Calidad
 

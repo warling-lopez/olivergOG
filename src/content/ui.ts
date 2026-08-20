@@ -91,4 +91,5 @@ export const landing = {
   },
   audienceLabel: 'Para quién es:',
   whatsappMessagePrefix: 'Hola Oliver, me interesa el servicio de',
+  whatsappMessageSuffix: '¿Podemos hablar?',
 } as const satisfies Record<string, unknown>

@@ -5,28 +5,59 @@ import { contactMessage, openWhatsApp } from '@/lib/whatsapp'
 import { track } from '@/lib/analytics'
 import { ROUTES } from '@/config/site'
 import { contactForm } from '@/content/cta'
+import { cn } from '@/lib/cn'
+
+const FIELDS = [
+  { name: 'nombre', autoComplete: 'name', multiline: false, min: 2 },
+  { name: 'negocio', autoComplete: 'organization', multiline: false, min: 2 },
+  { name: 'resolver', autoComplete: 'off', multiline: true, min: 10 },
+] as const
+
+type FieldName = (typeof FIELDS)[number]['name']
+type Errors = Partial<Record<FieldName, string>>
 
 const inputClass =
-  'min-h-11 rounded-btn bg-ink-800/60 px-4 py-3 text-paper ring-1 ring-mist/20 transition-shadow placeholder:text-slateq focus:ring-brand-500'
+  'min-h-11 rounded-btn bg-ink-800/60 px-4 py-3 text-paper ring-1 transition-shadow placeholder:text-slateq focus:ring-brand-500'
 
 /**
- * Tres campos, sin backend: al enviar se construye el mensaje de WhatsApp y se
- * abre el chat. Cero espera, cero correos que nadie contesta.
+ * Tres campos y sin backend: al enviar se construye el mensaje de WhatsApp y se
+ * abre el chat. Nada viaja a ningún servidor nuestro.
+ *
+ * Límite conocido: si la persona cierra WhatsApp sin pulsar enviar, ese lead se
+ * pierde y no queda registro en ningún lado. Es el precio de no tener backend.
  */
-export function ContactForm({ location }: { location: string }) {
+export function ContactForm({ location, service }: { location: string; service?: string }) {
   const navigate = useNavigate()
   const started = useRef(false)
-  const [sent, setSent] = useState(false)
+  const [errors, setErrors] = useState<Errors>({})
 
   const onFirstFocus = () => {
     if (started.current) return
     started.current = true
-    track('form_step', { step: 1, form: 'contacto' })
+    track('form_start', { form: 'contacto' })
+  }
+
+  function validate(data: FormData): Errors {
+    const found: Errors = {}
+    for (const field of FIELDS) {
+      const value = String(data.get(field.name) ?? '').trim()
+      if (!value) found[field.name] = contactForm.errors.required
+      else if (value.length < field.min) found[field.name] = contactForm.errors.tooShort
+    }
+    return found
   }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
+
+    const found = validate(data)
+    setErrors(found)
+    if (Object.keys(found).length > 0) {
+      const first = FIELDS.find((f) => found[f.name])
+      document.getElementById(`contact-${first?.name}`)?.focus()
+      return
+    }
 
     const message = contactMessage({
       nombre: String(data.get('nombre') ?? ''),
@@ -34,51 +65,52 @@ export function ContactForm({ location }: { location: string }) {
       resolver: String(data.get('resolver') ?? ''),
     })
 
-    track('lead_form_submit', { location })
-    // La conversión: el formulario se completó y abrió WhatsApp.
-    track('whatsapp_send', { location, value: 1 })
+    track('lead_form_submit', { service: service ?? 'general' })
+    // La conversión: el formulario armó el mensaje y abrió WhatsApp.
+    track('whatsapp_send', { value: 1, service: service ?? 'general', location })
 
     openWhatsApp(message)
-    setSent(true)
     navigate(ROUTES.thankYou)
   }
 
   return (
-    <form onSubmit={onSubmit} onFocusCapture={onFirstFocus} className="flex flex-col gap-5">
-      <label className="flex flex-col gap-2 text-sm text-mist">
-        {contactForm.fields.nombre.label}
-        <input
-          required
-          name="nombre"
-          type="text"
-          autoComplete="name"
-          placeholder={contactForm.fields.nombre.placeholder}
-          className={inputClass}
-        />
-      </label>
+    /* noValidate para que los mensajes sean los nuestros, en español, y no los
+       del navegador, que salen en el idioma del sistema. */
+    <form onSubmit={onSubmit} onFocusCapture={onFirstFocus} noValidate className="flex flex-col gap-5">
+      {FIELDS.map((field) => {
+        const copy = contactForm.fields[field.name]
+        const error = errors[field.name]
+        const id = `contact-${field.name}`
+        const shared = {
+          id,
+          name: field.name,
+          placeholder: copy.placeholder,
+          autoComplete: field.autoComplete,
+          'aria-invalid': error ? true : undefined,
+          'aria-describedby': error ? `${id}-error` : undefined,
+          className: cn(inputClass, error ? 'ring-gold-400' : 'ring-mist/20'),
+        }
 
-      <label className="flex flex-col gap-2 text-sm text-mist">
-        {contactForm.fields.negocio.label}
-        <input
-          required
-          name="negocio"
-          type="text"
-          autoComplete="organization"
-          placeholder={contactForm.fields.negocio.placeholder}
-          className={inputClass}
-        />
-      </label>
+        return (
+          <div key={field.name} className="flex flex-col gap-2">
+            <label htmlFor={id} className="text-sm text-mist">
+              {copy.label}
+            </label>
 
-      <label className="flex flex-col gap-2 text-sm text-mist">
-        {contactForm.fields.resolver.label}
-        <textarea
-          required
-          name="resolver"
-          rows={4}
-          placeholder={contactForm.fields.resolver.placeholder}
-          className={inputClass}
-        />
-      </label>
+            {field.multiline ? (
+              <textarea {...shared} rows={4} />
+            ) : (
+              <input {...shared} type="text" />
+            )}
+
+            {error && (
+              <p id={`${id}-error`} role="alert" className="text-sm text-gold-400">
+                {error}
+              </p>
+            )}
+          </div>
+        )
+      })}
 
       <Button type="submit" size="lg" className="self-start">
         {contactForm.submit}
@@ -86,10 +118,6 @@ export function ContactForm({ location }: { location: string }) {
 
       {/* Avisar del salto a WhatsApp sube la tasa de envío. */}
       <p className="caption">{contactForm.note}</p>
-
-      <p role="status" aria-live="polite" className="min-h-5 text-sm text-brand-400">
-        {sent ? contactForm.sent : ''}
-      </p>
     </form>
   )
 }

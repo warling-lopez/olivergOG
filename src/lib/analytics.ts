@@ -4,9 +4,9 @@ import { IS_DEV } from '@/config/env'
 export type AnalyticsEvent =
   | 'cta_click'
   | 'whatsapp_click'
-  /** Avance dentro del formulario de contacto. */
-  | 'form_step'
-  /** El formulario se completó y abrió WhatsApp. ESTA es la conversión. */
+  /** Primer campo del formulario enfocado. */
+  | 'form_start'
+  /** El formulario armó el mensaje y abrió WhatsApp. ESTA es la conversión. */
   | 'whatsapp_send'
   | 'lead_form_submit'
   | 'phone_click'

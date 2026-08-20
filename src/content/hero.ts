@@ -8,7 +8,7 @@ export const hero = {
   /** TODO_CLIENTE: cantidad real de negocios asesorados. */
   socialProof: 'TODO_CLIENTE negocios asesorados · Santiago, RD',
   whatsappMessage:
-    'Hola Oliver, vi tu sitio web y quiero agendar una conversación sobre mi negocio.',
+    'Hola Oliver, vi tu página web y me gustaría agendar una conversación sobre mi negocio.',
   scrollHint: 'DESLIZA',
   /** TODO_CLIENTE: sustituir por el recorte real (.webp, fondo removido). */
   portrait: '/img/oliver-hero.svg',
