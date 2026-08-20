@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { MessageCircle, CalendarCheck } from 'lucide-react'
 import { whatsappLink } from '@/lib/whatsapp'
 import { track } from '@/lib/analytics'
@@ -9,6 +9,7 @@ import { cn } from '@/lib/cn'
 
 /** Barra inferior fija en móvil; aparece al pasar el hero. */
 export function StickyCta({ message }: { message?: string }) {
+  const { pathname } = useLocation()
   const [visible, setVisible] = useState(
     () => typeof window !== 'undefined' && window.scrollY > window.innerHeight * 0.8,
   )
@@ -30,7 +31,7 @@ export function StickyCta({ message }: { message?: string }) {
         href={whatsappLink(message)}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => track('whatsapp_click', { location: 'sticky', page: window.location.pathname })}
+        onClick={() => track('whatsapp_click', { location: 'sticky', page: pathname })}
         className="inline-flex min-h-11 items-center justify-center gap-2 rounded-btn ring-1 ring-mist/25 text-sm font-semibold text-paper"
       >
         <MessageCircle aria-hidden="true" strokeWidth={1.75} className="size-4" />

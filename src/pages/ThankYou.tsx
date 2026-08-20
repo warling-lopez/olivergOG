@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { CheckCircle2 } from 'lucide-react'
 import { PageShell } from '@/components/layout/PageShell'
-import { thankYou } from '@/content/cta'
+import { WhatsAppButton } from '@/components/conversion/WhatsAppButton'
+import { thankYou, agendaPage } from '@/content/cta'
 import { ROUTES } from '@/config/site'
 
 export default function ThankYou() {
@@ -20,7 +21,15 @@ export default function ThankYou() {
           ))}
         </ul>
 
-        <Link to={ROUTES.home} className="text-sm text-brand-400 transition-colors hover:text-brand-500">
+        {/* Si el navegador bloqueó la pestaña, esta es la segunda oportunidad. */}
+        <WhatsAppButton message={agendaPage.whatsappMessage} location="gracias" variant="whatsapp">
+          {thankYou.cta}
+        </WhatsAppButton>
+
+        <Link
+          to={ROUTES.home}
+          className="text-sm text-brand-400 transition-colors hover:text-brand-500"
+        >
           {thankYou.back}
         </Link>
       </div>

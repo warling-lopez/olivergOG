@@ -11,7 +11,7 @@ Vite 8 · React 19 · TypeScript (strict) · Tailwind CSS v4 · Framer Motion ·
 
 ```bash
 npm install
-cp .env.example .env.local   # rellena GA4, Calendly y el endpoint del formulario
+cp .env.example .env.local   # rellena GA4 y el número de WhatsApp
 
 npm run dev       # http://localhost:5173/olivergOG/
 npm run build     # limpia + sitemap → tsc → vite build → prerender + robots
@@ -23,7 +23,11 @@ npm run icons     # regenera favicon-192/512 y apple-touch-icon desde favicon.sv
 
 `build` encadena tres pasos: `prebuild` borra `dist` y regenera `sitemap.xml`
 desde `config/seo.ts`, `vite build` compila a `dist/olivergOG`, y `postbuild`
-prerenderiza un `index.html` por ruta y deja `robots.txt` en la raíz del host.
+prerenderiza un `index.html` por ruta.
+
+Este proyecto **no publica `robots.txt`**: la raíz del host la comparte con el
+landing de Grolow Portfolios, que es quien lo genera y declara los sitemaps de
+ambos. Ver [docs/CONTRATO-HOST.md](docs/CONTRATO-HOST.md).
 
 **Verificación en dev:** `npm run dev` debe abrir en `localhost:5173/olivergOG/`.
 Si abre en `localhost:5173/` y funciona, `base` no se aplicó.
@@ -51,7 +55,7 @@ Las tareas de SEO local que no se programan están en [docs/SEO-LOCAL.md](docs/S
 
 | Necesito cambiar… | Archivo |
 |---|---|
-| Teléfono, redes, Calendly, URL del sitio | `src/config/site.ts` (o `.env.local`) |
+| Teléfono, WhatsApp, redes, URL del sitio | `src/config/site.ts` (o `.env.local`) |
 | Títulos y descripciones de cada ruta | `src/config/seo.ts` |
 | Datos estructurados (JSON-LD) | `src/config/schema.ts` |
 | Copy de cualquier sección | `src/content/*.ts` |
@@ -100,7 +104,7 @@ grep -rn TODO_CLIENTE src public scripts
 ```
 
 Bio y credenciales, cifras de `results.ts`, testimonios con autorización, precios,
-respuestas del FAQ, URL de Calendly, perfiles de Instagram y LinkedIn, ID de GA4,
+respuestas del FAQ, perfiles de Instagram y LinkedIn, ID de GA4,
 correo y nombre legal, y las imágenes definitivas (`public/img/*.webp`; las OG de
 `public/og/` son arte generado, a sustituir cuando llegue el retrato recortado).
 

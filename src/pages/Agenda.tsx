@@ -1,16 +1,19 @@
-import { ArrowLeft, Check, MessageCircle } from 'lucide-react'
+import { ArrowLeft, Check } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PageShell } from '@/components/layout/PageShell'
 import { Logo } from '@/components/layout/Logo'
-import { ButtonLink } from '@/components/ui/Button'
-import { CalendlyEmbed } from '@/components/conversion/CalendlyEmbed'
-import { LeadForm } from '@/components/conversion/LeadForm'
+import { ContactForm } from '@/components/conversion/ContactForm'
+import { WhatsAppButton } from '@/components/conversion/WhatsAppButton'
 import { agendaPage } from '@/content/cta'
-import { CTA_WHATSAPP_LABEL, ROUTES, SITE } from '@/config/site'
-import { whatsappLink } from '@/lib/whatsapp'
+import { ROUTES, SITE } from '@/config/site'
+import { telLink } from '@/lib/whatsapp'
 import { track } from '@/lib/analytics'
 
-/** Página de fricción cero: sin navbar ni footer, solo logo y calendario. */
+/**
+ * Fricción cero: sin navbar ni footer, solo logo y volver.
+ * Tres campos que terminan en un mensaje de WhatsApp, y una salida directa
+ * al chat para quien no quiera llenar nada.
+ */
 export default function Agenda() {
   return (
     <PageShell path="/agenda" chrome="bare" whatsappMessage={agendaPage.whatsappMessage}>
@@ -26,8 +29,8 @@ export default function Agenda() {
           </Link>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="flex flex-col gap-7 lg:col-span-4">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="flex flex-col gap-7 lg:col-span-5">
             <h1 className="display-lg text-paper">{agendaPage.title}</h1>
             <p className="lead">{agendaPage.subtitle}</p>
 
@@ -44,38 +47,32 @@ export default function Agenda() {
               ))}
             </ul>
 
+            {/* Salida directa, siempre visible: no todo el mundo quiere un formulario. */}
             <div className="rounded-card bg-ink-800/60 p-7 ring-hair">
               <p className="display-md text-paper">{agendaPage.altHeadline}</p>
-              <ButtonLink
-                href={whatsappLink(agendaPage.whatsappMessage)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <p className="body-copy mt-3">{agendaPage.altBody}</p>
+              <WhatsAppButton
+                message={agendaPage.whatsappMessage}
+                location="agenda_directo"
                 variant="whatsapp"
                 className="mt-5 w-full"
-                onClick={() => track('whatsapp_click', { location: 'agenda_page', page: ROUTES.agenda })}
               >
-                <MessageCircle aria-hidden="true" strokeWidth={1.75} className="size-4" />
-                {CTA_WHATSAPP_LABEL}
-              </ButtonLink>
-              <p className="caption-card mt-4 text-center">{SITE.contact.phoneDisplay}</p>
+                {agendaPage.altCta}
+              </WhatsAppButton>
+              <a
+                href={telLink()}
+                onClick={() => track('phone_click', { location: 'agenda' })}
+                className="caption-card mt-4 block text-center transition-colors hover:text-paper"
+              >
+                {SITE.contact.phoneDisplay}
+              </a>
             </div>
           </div>
 
-          <div className="lg:col-span-8">
-            <CalendlyEmbed />
+          <div className="lg:col-span-7">
+            <ContactForm location="agenda" />
           </div>
         </div>
-
-        {/* Vía alternativa, debajo del calendario para no añadir fricción arriba. */}
-        <section aria-labelledby="agenda-form" className="mx-auto w-full max-w-3xl pb-8">
-          <h2 id="agenda-form" className="display-md text-paper">
-            {agendaPage.formHeadline}
-          </h2>
-          <p className="body-copy mt-3">{agendaPage.formSubtitle}</p>
-          <div className="mt-8">
-            <LeadForm location="agenda_page" />
-          </div>
-        </section>
       </div>
     </PageShell>
   )

@@ -40,26 +40,6 @@ export const ui = {
   legal: {
     updatedLabel: 'Última actualización:',
   },
-  calendly: {
-    loading: 'Cargando calendario…',
-    noscript:
-      'Activa JavaScript para ver el calendario, o escríbeme por WhatsApp al',
-  },
-  form: {
-    fields: {
-      nombre: 'Nombre',
-      negocio: 'Negocio',
-      telefono: 'Teléfono',
-      correo: 'Correo',
-    },
-    messageLabel: '¿Qué te gustaría resolver?',
-    submit: 'Enviar mensaje',
-    sending: 'Enviando…',
-    success: 'Mensaje enviado. Te contacto en menos de 24 horas.',
-    error: 'No se pudo enviar. Escríbeme por WhatsApp al 829 884 7499.',
-    honeypot: 'Deja este campo vacío',
-    intro: 'Hola Oliver, quiero agendar una conversación.',
-  },
   notFound: {
     code: '404',
   },

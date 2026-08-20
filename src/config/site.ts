@@ -53,11 +53,6 @@ export const SITE = {
     facebook: '',
   },
 
-  calendlyUrl: env.VITE_CALENDLY_URL ?? 'https://calendly.com/TODO_CLIENTE/30min',
-
-  /** Endpoint del formulario (Formspree / Web3Forms / Formsubmit). */
-  formEndpoint: env.VITE_FORM_ENDPOINT ?? '',
-
   analytics: {
     ga4: env.VITE_GA4_ID ?? '',
     metaPixel: env.VITE_META_PIXEL_ID ?? '',

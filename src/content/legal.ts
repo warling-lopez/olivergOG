@@ -32,7 +32,7 @@ export const privacy = {
     },
     {
       heading: 'Con quién los compartimos',
-      body: 'No vendemos ni cedemos tus datos. Los comparten únicamente los proveedores que hacen funcionar el sitio: Calendly (agenda de citas), Google Analytics (medición de uso, con IP anonimizada), el proveedor del formulario de contacto y WhatsApp / Meta cuando eres tú quien inicia la conversación. Cada uno trata los datos bajo sus propias políticas.',
+      body: 'No vendemos ni cedemos tus datos. El formulario de este sitio no envía nada a ningún servidor nuestro: lo que escribes se convierte en un mensaje que se abre en tu propio WhatsApp, y nada sale de tu teléfono hasta que pulsas enviar. A partir de ahí la conversación queda sujeta a las políticas de WhatsApp y Meta. El único otro proveedor es Google Analytics, con la IP anonimizada, y solo si aceptas las cookies de analítica.',
     },
     {
       heading: 'Cookies',
@@ -83,7 +83,7 @@ export const terms = {
     },
     {
       heading: 'Enlaces a terceros',
-      body: 'El sitio enlaza a servicios de terceros (Calendly, WhatsApp, redes sociales). No controlamos su contenido ni sus políticas, y no respondemos por ellos.',
+      body: 'El sitio enlaza a servicios de terceros (WhatsApp, redes sociales). No controlamos su contenido ni sus políticas, y no respondemos por ellos.',
     },
     {
       heading: 'Limitación de responsabilidad',

@@ -18,29 +18,45 @@ export const finalCta = {
 
 export const agendaPage = {
   title: 'Agenda tu cita',
-  subtitle: 'Elige el día y la hora que mejor te convenga.',
+  subtitle:
+    'Cuéntame en tres líneas dónde estás y te escribo por WhatsApp para coordinar la hora.',
   bullets: [
     'Conversamos 30 minutos sobre el momento actual de tu negocio.',
     'Identificamos juntos el cuello de botella más urgente.',
     'Sales con al menos una acción concreta, trabajemos o no juntos.',
   ],
-  altHeadline: '¿Prefieres escribir?',
-  formHeadline: '¿No encuentras un horario que te sirva?',
-  formSubtitle:
-    'Déjame tus datos y te escribo yo para coordinar una hora que te funcione.',
-  whatsappMessage: 'Hola Oliver, prefiero coordinar la cita por WhatsApp.',
+  altHeadline: '¿Prefieres escribir directo?',
+  altBody: 'Sáltate el formulario y escríbeme por WhatsApp ahora mismo.',
+  altCta: 'Prefiero escribir directo',
+  whatsappMessage: 'Hola Oliver, quiero agendar la conversación inicial de 30 minutos.',
   back: 'Volver al inicio',
 } as const
 
+export const contactForm = {
+  submit: 'Enviar por WhatsApp',
+  /* Decirlo sube la tasa de envío: nadie se sorprende con el cambio de app. */
+  note: 'Se abrirá WhatsApp con tu mensaje ya escrito. Solo tienes que darle enviar.',
+  sent: 'Se abrió WhatsApp con tu mensaje listo para enviar.',
+  fields: {
+    nombre: { label: 'Nombre', placeholder: 'Tu nombre' },
+    negocio: { label: 'Negocio u oficio', placeholder: 'Restaurante, constructora, consultorio…' },
+    resolver: {
+      label: '¿Qué quieres resolver?',
+      placeholder: 'En qué está atascado el negocio ahora mismo',
+    },
+  },
+} as const
+
 export const thankYou = {
-  title: 'Cita confirmada',
+  title: 'Ya casi',
   subtitle:
-    'Recibirás la confirmación por correo con el enlace de la reunión. Nos vemos pronto.',
+    'Se abrió WhatsApp con tu mensaje listo. Dale enviar y coordinamos la hora en el mismo chat.',
   next: [
-    'Revisa tu correo — ahí va el enlace de la reunión.',
+    'Dale enviar al mensaje que se abrió en WhatsApp.',
     'Anota las tres cosas que más te preocupan del negocio.',
     'Ten a mano tus números de los últimos tres meses, si los tienes.',
   ],
+  cta: 'Abrir WhatsApp otra vez',
   back: 'Volver al inicio',
 } as const
 

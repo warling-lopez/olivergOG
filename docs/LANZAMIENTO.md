@@ -5,7 +5,7 @@ Marca cada punto contra el sitio ya subido a `https://myprofolio.grolow.com/oliv
 ## Antes de subir
 
 - [ ] `grep -rn TODO_CLIENTE src public scripts` → cero resultados.
-- [ ] `.env.local` creado con `VITE_GA4_ID`, `VITE_CALENDLY_URL` y `VITE_FORM_ENDPOINT` reales.
+- [ ] `.env.local` creado con `VITE_GA4_ID` y `VITE_WHATSAPP` reales.
 - [ ] `npm run og` y `npm run icons` reejecutados si cambió el arte.
 - [ ] `npm run build` sin errores; `npm run preview` revisado.
 
@@ -34,9 +34,11 @@ Marca cada punto contra el sitio ya subido a `https://myprofolio.grolow.com/oliv
 
 - [ ] "Agenda tu cita" funciona desde navbar, hero, cada tarjeta de servicio, sticky móvil y cierre.
 - [ ] WhatsApp abre con el mensaje pre-escrito correcto en móvil y en escritorio.
-- [ ] Calendly carga, permite agendar y redirige a `/gracias`.
+- [ ] El formulario de `/agenda` abre WhatsApp con el mensaje armado y redirige a `/gracias`.
+- [ ] «Prefiero escribir directo» abre WhatsApp sin pasar por el formulario.
+- [ ] Las tildes, la `ñ` y los signos `¿ ¡` llegan bien al chat, en móvil y en WhatsApp Web.
 - [ ] Todos los eventos aparecen en el DebugView de GA4.
-- [ ] `booking_confirmed` marcado como conversión en GA4.
+- [ ] `whatsapp_send` marcado como conversión en GA4.
 
 ## Calidad
 
